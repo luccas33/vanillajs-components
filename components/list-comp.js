@@ -17,46 +17,80 @@ function init(component) {
     component.listElement = document.createElement('div');
     component.mainElement.append(component.listElement);
 
+    component.items = [];
+
     // Adicionando evento para ser chamado em exec()
-    appEvents.add(appEvents.keys.listInfoChange, () => createList(component));
+    appEvents.add(appEvents.keys.listInfoChange, () => {
+        component.items.forEach(item => item.isRemoved = false);
+        createList(component);
+    });
+    appEvents.add(appEvents.keys.refreshList, () => createList(component));
 }
 
 function createList(component) {
-    let main = component.listElement;
-    main.innerHTML = '';
-    
-    let name = appData.listInfo.name || 'Value';
+    component.listElement.innerHTML = '';
+
     let quantity = appData.listInfo.quantity || 0;
-    component.inputs = [];
-
-    for (let i = 1; i <= quantity; i++) {
-        let item = document.createElement('div');
-        main.append(item);
-
-        let label = document.createElement('label');
-        label.textContent = `${name} ${i}`;
-        item.append(label);
-
-        let input = document.createElement('input');
-        input.value = i;
-        input.type = 'number';
-        item.append(input);
-        component.inputs.push(input);
-        applyCSS(input, css.input);
-
-        input.addEventListener('change', () => sumValues(component));
+    if (quantity < 1) {
+        return;
     }
 
+    for (let i = 0; i < quantity; i++) {
+        createListItem(component, i);
+    }
+    component.items = component.items.slice(0, quantity);
+
     component.totalElement = document.createElement('div');
-    main.append(component.totalElement);
+    component.listElement.append(component.totalElement);
     sumValues(component);
+}
+
+function createListItem(component, index) {
+    let item = component.items[index];
+    if (item && item.isRemoved) {
+        return;
+    }
+    if (!item) {
+        item = { value: index + 1, index }
+        component.items.push(item);
+    }
+
+    let main = component.listElement;
+    let itemdiv = document.createElement('div');
+    main.append(itemdiv);
+
+    let name = appData.listInfo.name || 'Value';
+    let label = document.createElement('label');
+    label.textContent = `${name} ${index + 1}`;
+    itemdiv.append(label);
+
+    let input = document.createElement('input');
+    input.value = item.value;
+    input.type = 'number';
+    itemdiv.append(input);
+    applyCSS(input, css.input);
+
+    input.addEventListener('change', () => {
+        item.value = Number.parseFloat(input.value);
+        sumValues(component);
+    });
+
+    let btn = document.createElement('button');
+    btn.textContent = 'X';
+    itemdiv.append(btn);
+    btn.addEventListener('click', () => {
+        item.isRemoved = true;
+        item.value = item.index + 1;
+        appEvents.exec(appEvents.keys.refreshList);
+    });
 }
 
 function sumValues(component) {
     let total = 0;
-    component.inputs.forEach(ipt => {
-        total += Number.parseFloat(ipt.value);
-    });
+    component.items.filter(item => !item.isRemoved)
+        .forEach(item => {
+            total += item.value;
+        });
     let ptotal = document.createElement('p');
     ptotal.textContent = `Total: ${total}`;
     component.totalElement.innerHTML = '';

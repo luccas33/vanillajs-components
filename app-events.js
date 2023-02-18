@@ -1,6 +1,7 @@
 
 const keys = {
-    listInfoChange: 'listInfoChange'
+    listInfoChange: 'listInfoChange',
+    refreshList: 'refreshList'
 }
 
 const eventGroups = []

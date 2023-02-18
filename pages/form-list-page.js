@@ -31,4 +31,8 @@ function init(component) {
     let list = createListComponent();
     list.init();
     component.content.append(list.mainElement);
+
+    let p = document.createElement('p');
+    p.textContent = 'Acesso o arquivo components/list-comp.js para ver o código deste componente';
+    component.content.append(p);
 }

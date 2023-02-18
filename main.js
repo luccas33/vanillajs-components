@@ -6,7 +6,7 @@ import { createFormListPage } from "./pages/form-list-page.js";
  */
 const pages = [
     {path: '/home', label: 'Home', createComponent: createHomePage},
-    {path: '/form-list-page', label: 'Form List', createComponent: createFormListPage}
+    {path: '/form-list', label: 'Form List', createComponent: createFormListPage}
 ];
 
 function restorePage() {

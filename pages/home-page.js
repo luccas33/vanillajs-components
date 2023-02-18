@@ -50,4 +50,8 @@ function init(component) {
     let p = document.createElement('p');
     p.innerText = 'Acesse o arquivo /pages/home-page.js para ler o tutorial.';
     content.append(p);
+
+    p = document.createElement('p');
+    p.innerText = 'Clique em Form List para ver manipulação complexa de lista.';
+    content.append(p);
 }
