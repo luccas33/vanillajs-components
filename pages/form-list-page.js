@@ -1,3 +1,4 @@
+import { addnewel } from "../components/comp-utils.js";
 import { createFormComponent } from "../components/form-comp.js";
 import { createListComponent } from "../components/list-comp.js";
 import { createHeaderComponent } from "./shared/header-comp.js";
@@ -15,14 +16,10 @@ function init(component) {
     header.init();
     component.mainElement.append(header.mainElement);
 
-    let content = document.createElement('main');
-    content.className = 'page-content';
-    component.mainElement.append(content);
+    let content = addnewel(component.mainElement, 'main', {className: 'page-content'});
     component.content = content;
 
-    let title = document.createElement('h2');
-    title.textContent = 'Form List Page';
-    component.content.append(title);
+    addnewel(content, 'h2', {textContent: 'Form List Page'})
 
     let form = createFormComponent();
     form.init();
@@ -32,7 +29,5 @@ function init(component) {
     list.init();
     component.content.append(list.mainElement);
 
-    let p = document.createElement('p');
-    p.textContent = 'Acesso o arquivo components/list-comp.js para ver o código deste componente';
-    component.content.append(p);
+    addnewel(content, 'p', {textContent: 'Acesso o arquivo components/list-comp.js para ver o código deste componente'})
 }

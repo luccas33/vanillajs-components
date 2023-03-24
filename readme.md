@@ -28,8 +28,7 @@ export function createHomePage() {
 
     // O componente só precisa ter um mainElement e uma função de init para executar a renderização.
 
-    component.mainElement = document.createElement('section');
-    component.mainElement.className = 'home-page';
+    component.mainElement = newel('section', {className: 'home-page'});
 
     component.init = () => init(component);
 
@@ -53,15 +52,15 @@ function init(component) {
 ## Data Bind
 
 ```Javascript
-let input = document.createElement('input');
+let input = newel('input');
 
 // Atribua e obtenha o valor do input diretamente, sem necessidade de recupera-lo da tela
 input.value = item.value;
-item.value = input.value;
+onchange(input, () => item.value = input.value);
 
 ```
 
-## Eventos
+## Eventos de Aplicação
 
 ```Javascript
 appEvents.add('name', () => funcToExec());

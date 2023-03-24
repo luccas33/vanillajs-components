@@ -1,3 +1,4 @@
+import { addnewel, newel } from "../components/comp-utils.js";
 import { createHeaderComponent } from "./shared/header-comp.js";
 
 /*
@@ -15,8 +16,7 @@ export function createHomePage() {
         Não gere os elementos filhos do mainElement aqui.
         Todos os elementos devem ser gerados ao executar init()
     */
-    component.mainElement = document.createElement('section');
-    component.mainElement.className = 'home-page';
+    component.mainElement = newel('section', {className: 'home-page'});
 
     /*
         O componente deve ter uma função para disparar a renderização.
@@ -39,19 +39,11 @@ function init(component) {
     // Adicionando o mainElement do Header ao mainElement da Home
     component.mainElement.append(header.mainElement);
 
-    let content = document.createElement('main');
-    content.className = 'page-content';
-    component.mainElement.append(content);
+    let content = addnewel(component.mainElement, 'main', {className: 'page-content'});
 
-    let title = document.createElement('h2');
-    title.innerText = 'Home Page';
-    content.append(title);
+    addnewel(content, 'h2', {textContent: 'Home Page'});
 
-    let p = document.createElement('p');
-    p.innerText = 'Acesse o arquivo /pages/home-page.js para ler o tutorial.';
-    content.append(p);
+    addnewel(content, 'p', {textContent: 'Acesse o arquivo /pages/home-page.js para ler o tutorial.'});
 
-    p = document.createElement('p');
-    p.innerText = 'Clique em Form List para ver manipulação complexa de lista.';
-    content.append(p);
+    addnewel(content, 'p', {innerText: 'Clique em Form List para ver manipulação complexa de lista.'});
 }
