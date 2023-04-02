@@ -28,7 +28,7 @@ export function createHomePage() {
 
     // O componente só precisa ter um mainElement e uma função de init para executar a renderização.
 
-    component.mainElement = newel('section', {className: 'home-page'});
+    component.mainElement = newel('section', {className: 'home-page', style: homeStyle});
 
     component.init = () => init(component);
 
@@ -81,18 +81,20 @@ appRoot.navToPage(page.path)
 
 ```Javascript
 const css = {
-    main: {
-        display: 'flex'
-    },
-    title: {
-        width: '220px'
-    },
-    nav: {
-        display: 'flex',
-        alignItems: 'center',
-        width: '50%'
-    }
+    display: 'flex',
+
+    styles: [
+        {
+            selector: '.title',
+            width: '220px'
+        },
+        {
+            selector: '.nav',
+            alignItems: 'center',
+            width: '50%'
+        }
+    ]
 }
 
-applyCSS(element, css.nav)
+applyCSS(mainElement, css);
 ```

@@ -1,0 +1,26 @@
+{
+  "name": "vanillajs-components",
+  "version": "1.0.0",
+  "description": "Todo o controle de renderização, fluxo e dados do componente na sua mão.\r Porém, sem precisar se preocupar em como encaixar tudo.",
+  "main": "main.js",
+  "scripts": {
+    "dev": "tsc -w; live-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luccas33/vanillajs-components.git"
+  },
+  "author": "luccas33",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luccas33/vanillajs-components/issues"
+  },
+  "homepage": "https://github.com/luccas33/vanillajs-components#readme",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  },
+  "dependencies": {
+    "systemjs": "^6.14.1",
+    "tsc": "^2.0.4"
+  }
+}

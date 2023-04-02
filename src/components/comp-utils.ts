@@ -1,8 +1,12 @@
-export function newel(tag, props) {
+export function newel(tag: string, props?: any) {
     return addnewel(null, tag, props);
 }
 
-export function addnewel(parent, tag, props) {
+export function addnewel(
+    parent: HTMLElement | null,
+    tag: string,
+    props?: any
+): HTMLElement {
     let elmt = document.createElement(tag);
     if (parent) {
         parent.append(elmt);
@@ -13,7 +17,7 @@ export function addnewel(parent, tag, props) {
     return elmt;
 }
 
-export function applyValues(from, to) {
+export function applyValues(from: any, to: any) {
     if (!from || !to) {
         return;
     }
@@ -38,7 +42,14 @@ export function applyValues(from, to) {
     });
 }
 
-export function applyCSS(element, css) {
+/**
+ * element: HTMLElement,
+ * 
+ * css: object with css properties
+ * css.selector: select childs with css selector
+ * css.styles: css object list to apply on childs
+ */
+export function applyCSS(element: HTMLElement, css: any) {
     if (!element || !css) {
         return;
     }
@@ -58,7 +69,7 @@ export function applyCSS(element, css) {
     let styles = css.styles;
     delete css.styles;
     Object.keys(css).forEach((prop) => {
-        element.style[prop] = css[prop];
+        setValue(element.style, prop, css[prop]);
     });
     if (!styles) {
         return;
@@ -66,7 +77,7 @@ export function applyCSS(element, css) {
     if (!Array.isArray(styles)) {
         styles = [styles];
     }
-    styles.forEach((style) => {
+    styles.forEach((style: any) => {
         if (!style.selector) {
             return;
         }
@@ -77,17 +88,39 @@ export function applyCSS(element, css) {
     });
 }
 
-export function onclick(element, callback) {
-  onevent(element, 'click', callback);
+export function getValue(obj: any, param: string) {
+    return obj[param];
 }
 
-export function onchange(element, callback) {
-  onevent(element, 'change', callback);
+export function setValue(obj: any, param: string, value: any) {
+    obj[param] = value;
 }
 
-function onevent(element, type, callback) {
-  if (!element || !callback) {
-    return;
-  }
-  element.addEventListener(type, callback);
+export function getNumber(
+    num: string | number | null | undefined,
+    def: number = 0
+): number {
+    if (num === null || num === undefined) {
+        return def;
+    }
+    let val = Number.parseFloat(num + "");
+    if (Number.isNaN(val)) {
+        return def;
+    }
+    return val;
+}
+
+export function onclick(element: HTMLElement, callback: Function) {
+    onevent(element, "click", callback);
+}
+
+export function onchange(element: HTMLElement, callback: Function) {
+    onevent(element, "change", callback);
+}
+
+function onevent(element: HTMLElement, type: string, callback: Function) {
+    if (!element || !callback) {
+        return;
+    }
+    element.addEventListener(type, (evt) => callback(evt));
 }
